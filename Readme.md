@@ -56,7 +56,7 @@ You could change the name, user and password of the database in the `env` file a
 5. Install packages from composer
 
 ```shell script
-$ cd symfony
+$ docker-compose exec php sh
 $ composer install
 ```
 
