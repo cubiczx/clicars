@@ -27,7 +27,6 @@ class TestCases extends TestCase
         $boss4 = $mafia->addMember((new Member($id++, 73))->setBoss($boss1));
 
         $boss5 = $mafia->addMember((new Member($id++, 68))->setBoss($boss2));
-        //var_dump($boss5);
         $mafia->addMember((new Member($id++, 52))->setBoss($boss5));
         $mafia->addMember((new Member($id++, 64))->setBoss($boss2));
         $mafia->addMember((new Member($id++, 63))->setBoss($boss2));
@@ -118,6 +117,7 @@ class TestCases extends TestCase
         $this->assertTrue($mafia->sendToPrison($mafia->getMember(8)));
 
         // Check moved members
+        // TODO fix sendToPrison method
         $this->assertEquals(11, $mafia->getMember(10)->getBoss()->getId());
         $this->assertEquals(2, $mafia->getMember(11)->getBoss()->getId());
     }

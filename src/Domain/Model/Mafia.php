@@ -144,16 +144,9 @@ class Mafia implements IMafia
                 $membersWithSameBoss[] = $mafiaMember;
             }
         }
-        // Search older member
-        return $this->searchOlderMember($membersWithSameBoss);
-
-        // TODO If there is no such possible alternative boss the oldest direct subordinate of the previous boss is promoted to be the boss of the others.
-        /*foreach ($member->getSubordinates() as $subordinates){
-            echo $subordinates->getId();
-            if ($subordinates->getId() === $member->getId()) {
-
-            }
-        }*/
+        return !empty($membersWithSameBoss)
+            ? $this->searchOlderMember($membersWithSameBoss)
+            : $this->searchOlderSubordinate($member);
     }
 
     /**
@@ -181,5 +174,17 @@ class Mafia implements IMafia
             }
             $previous = $memberWithSameBoss;
         }*/
+    }
+
+    /**
+     * @param IMember $member
+     * @return IMember
+     */
+    private function searchOlderSubordinate(IMember $member): IMember
+    {
+        $subordinates = $member->getBoss()->getSubordinates();
+        return array_reduce($subordinates, function($a, $b){
+            return $a ? ($a->getAge() > $b->getAge() ? $a : $b) : $b;
+        });
     }
 }
